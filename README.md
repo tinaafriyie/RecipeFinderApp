@@ -49,8 +49,10 @@ UI Layer (Compose) → ViewModel → Repository → Data Sources (Firebase/API)
 
 - **TheMealDB API**: https://www.themealdb.com/api.php
 
-## Screenshots 📸
-
-[]
 
 ## Team 👥
+Amoako Ernestina Afriyie
+Alpatson Cobina Siaw
+Kwabena Anokye
+Josephine Ama Gyanewah Gyasi
+
