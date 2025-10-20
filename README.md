@@ -52,7 +52,7 @@ UI Layer (Compose) → ViewModel → Repository → Data Sources (Firebase/API)
 
 ## Team 👥
 Amoako Ernestina Afriyie
-Alpatson Cobina Siaw
+Alpatson Cobbina Siaw
 Kwabena Anokye
 Josephine Ama Gyanewah Gyasi
 
