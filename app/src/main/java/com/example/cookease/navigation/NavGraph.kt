@@ -2,14 +2,17 @@ package com.example.cookease.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.cookease.ui.about.AboutScreen
 import com.example.cookease.ui.auth.LoginScreen
 import com.example.cookease.ui.auth.RegisterScreen
 import com.example.cookease.ui.main.MainScreen
 import com.example.cookease.ui.profile.ProfileScreen
 import com.example.cookease.ui.recipe.AddRecipeScreen
+import com.example.cookease.ui.recipe.EditRecipeScreen
 import com.example.cookease.ui.recipe.RecipeDetailScreen
 import com.example.cookease.viewmodel.AuthViewModel
 import com.example.cookease.viewmodel.RecipeViewModel
@@ -24,6 +27,10 @@ sealed class Screen(val route: String) {
     }
     object Profile : Screen("profile")
     object About : Screen("about")
+
+    object EditRecipe : Screen("edit_recipe/{recipeId}") {
+        fun createRoute(recipeId: String) = "edit_recipe/$recipeId"
+    }
 }
 
 @Composable
@@ -91,7 +98,10 @@ fun NavGraph(
             RecipeDetailScreen(
                 recipeId = recipeId,
                 recipeViewModel = recipeViewModel,
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackStack() },onNavigateToEdit = { id ->  // ← Add this
+                    navController.navigate(Screen.EditRecipe.createRoute(id))
+                }
+
             )
         }
 
@@ -104,6 +114,19 @@ fun NavGraph(
 
         composable(Screen.About.route) {
             AboutScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = Screen.EditRecipe.route,
+            arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString("recipeId") ?: ""
+            EditRecipeScreen(
+                recipeId = recipeId,
+                recipeViewModel = recipeViewModel,
+                authViewModel = authViewModel,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

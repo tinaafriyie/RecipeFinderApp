@@ -48,7 +48,7 @@ fun AboutScreen(
             )
 
             Text(
-                text = "Cookease",
+                text = "CookEase",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -106,7 +106,7 @@ fun AboutScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
-                text = "Developed with ❤️ using Kotlin & Firebase",
+                text = "Developed with ❤️ for you",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center

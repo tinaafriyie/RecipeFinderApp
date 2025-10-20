@@ -123,6 +123,8 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
+
+
     fun RecipeViewModel.getRecipeById(recipeId: String): kotlinx.coroutines.Deferred<Result<com.example.cookease.data.model.Recipe>> {
         return viewModelScope.async {
             try {

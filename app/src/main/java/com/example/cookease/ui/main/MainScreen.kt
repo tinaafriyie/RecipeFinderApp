@@ -17,6 +17,7 @@ import coil.compose.AsyncImage
 import com.example.cookease.data.model.Recipe
 import com.example.cookease.viewmodel.AuthViewModel
 import com.example.cookease.viewmodel.RecipeViewModel
+//
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +35,8 @@ fun MainScreen(
     var showMenu by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf(0) }
-    val apiRecipes = recipeViewModel.apiRecipes.value
+    val apiRecipes by recipeViewModel.apiRecipes
+    val isLoading by recipeViewModel.isLoading
 
     LaunchedEffect(user) {
         user?.let {
@@ -105,19 +107,43 @@ fun MainScreen(
                 placeholder = { Text("Search recipes...") },
                 leadingIcon = { Icon(Icons.Default.Search, "Search") },
                 trailingIcon = {
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = {
-                            recipeViewModel.searchApiRecipes(searchQuery)
-                            selectedTab = 1
-                        }) {
-                            Icon(Icons.Default.Send, "Search API")
+                    Row {
+                        if (searchQuery.isNotEmpty()) {
+                            // Clear button
+                            IconButton(onClick = {
+                                searchQuery = ""
+                                //apiRecipes.value = emptyList()  // Clear results
+                            }) {
+                                Icon(Icons.Default.Close, "Clear")
+                            }
+                            // Search button
+                            IconButton(onClick = {
+                                if (searchQuery.isNotBlank()) {
+                                    recipeViewModel.searchApiRecipes(searchQuery)
+                                    selectedTab = 1  // Switch to Discover tab
+                                }
+                            }) {
+                                Icon(Icons.Default.Send, "Search API", tint = MaterialTheme.colorScheme.primary)
+                            }
                         }
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                singleLine = true
+                singleLine = true,
+                // Add keyboard action to search on Enter
+                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                    imeAction = androidx.compose.ui.text.input.ImeAction.Search
+                ),
+                keyboardActions = androidx.compose.foundation.text.KeyboardActions(
+                    onSearch = {
+                        if (searchQuery.isNotBlank()) {
+                            recipeViewModel.searchApiRecipes(searchQuery)
+                            selectedTab = 1  // Switch to Discover tab
+                        }
+                    }
+                )
             )
 
             // Tabs

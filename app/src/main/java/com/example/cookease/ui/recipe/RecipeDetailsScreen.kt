@@ -21,7 +21,8 @@ import kotlinx.coroutines.launch
 fun RecipeDetailScreen(
     recipeId: String,
     recipeViewModel: RecipeViewModel,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToEdit: (String) -> Unit
 ) {
     var recipe by remember { mutableStateOf<Recipe?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -45,6 +46,13 @@ fun RecipeDetailScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = {
+                        // You'll need to pass onNavigateToEdit callback
+                        onNavigateToEdit(recipeId)
+                    }) {
+                        Icon(Icons.Default.Edit, "Edit")
+                    }
+
                     IconButton(onClick = { showDeleteDialog = true }) {
                         Icon(Icons.Default.Delete, "Delete")
                     }
