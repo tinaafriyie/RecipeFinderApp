@@ -1,8 +1,8 @@
-# RecipeFinderApp
+#** CookEase**
 Easy access to cool recipes
 
 
-# Recipe Finder App 🍳
+#**CookEase**🍳
 
 A modern Android application for discovering and managing recipes, built with Kotlin, Jetpack Compose, and Firebase.
 
